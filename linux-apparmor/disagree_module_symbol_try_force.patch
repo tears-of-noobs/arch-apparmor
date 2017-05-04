@@ -1,5 +1,5 @@
---- kernel/module.c	2017-05-02 19:09:38.469229346 +0700
-+++ kernel/module.c	2017-05-02 19:10:53.822560838 +0700
+--- a/kernel/module.c	2017-05-02 19:09:38.469229346 +0700
++++ b/kernel/module.c	2017-05-02 19:10:53.822560838 +0700
 @@ -1308,6 +1308,7 @@
  			return 1;
  		pr_debug("Found checksum %X vs module %lX\n",
