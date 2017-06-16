@@ -100,21 +100,6 @@ index 114fb23..ee77ec9 100644
 	AA_FS_DIR("rlimit",			aa_fs_entry_rlimit),
 	AA_FS_DIR("caps",			aa_fs_entry_caps),
  	{ }
-diff --git a/security/apparmor/audit.c b/security/apparmor/audit.c
-index 3ae28db..e267963 100644
---- a/security/apparmor/audit.c
-+++ b/security/apparmor/audit.c
-@@ -44,6 +44,10 @@ const char *const op_table[] = {
- 	"file_mmap",
- 	"file_mprotect",
- 
-+	"pivotroot",
-+	"mount",
-+	"umount",
-+
- 	"create",
- 	"post_create",
- 	"bind",
 diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
 index b81ea10..afa8671 100644
 --- a/security/apparmor/domain.c
@@ -147,31 +132,17 @@ diff --git a/security/apparmor/include/audit.h b/security/apparmor/include/audit
 index 17734f9..66a738c 100644
 --- a/security/apparmor/include/audit.h
 +++ b/security/apparmor/include/audit.h
-@@ -73,6 +73,10 @@ enum aa_ops {
- 	OP_FMMAP,
- 	OP_FMPROT,
- 
-+	OP_PIVOTROOT,
-+	OP_MOUNT,
-+	OP_UMOUNT,
+@@ -70,6 +70,10 @@ enum audit_type {
+ #define OP_FMMAP "file_mmap"
+ #define OP_FMPROT "file_mprotect"
+
++#define OP_PIVOTROOT "pivotroot"
++#define OP_MOUNT "mount"
++#define OP_UMOUNT "umount"
 +
- 	OP_CREATE,
- 	OP_POST_CREATE,
- 	OP_BIND,
-@@ -122,6 +126,13 @@ struct apparmor_audit_data {
- 			unsigned long max;
- 		} rlim;
- 		struct {
-+			const char *src_name;
-+			const char *type;
-+			const char *trans;
-+			const char *data;
-+			unsigned long flags;
-+		} mnt;
-+		struct {
- 			const char *target;
- 			u32 request;
- 			u32 denied;
+ #define OP_CREATE "create"
+ #define OP_POST_CREATE "post_create"
+ #define OP_BIND "bind"
 diff --git a/security/apparmor/include/domain.h b/security/apparmor/include/domain.h
 index de04464..a3f70c5 100644
 --- a/security/apparmor/include/domain.h
