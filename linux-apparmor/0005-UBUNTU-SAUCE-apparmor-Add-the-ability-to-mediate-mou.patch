@@ -60,16 +60,14 @@ diff --git a/security/apparmor/Makefile b/security/apparmor/Makefile
 index 19daa85..63e0a4c 100644
 --- a/security/apparmor/Makefile
 +++ b/security/apparmor/Makefile
-@@ -4,7 +4,7 @@ obj-$(CONFIG_SECURITY_APPARMOR) += apparmor.o
- 
+@@ -4,10 +4,10 @@ obj-$(CONFIG_SECURITY_APPARMOR) += appar
+
  apparmor-y := apparmorfs.o audit.o capability.o context.o ipc.o lib.o match.o \
                path.o domain.o policy.o policy_unpack.o procattr.o lsm.o \
--              resource.o sid.o file.o net.o
-+              resource.o sid.o file.o net.o mount.o
+-              resource.o secid.o file.o policy_ns.o
++              resource.o secid.o file.o net.o mount.o policy_ns.o
  apparmor-$(CONFIG_SECURITY_APPARMOR_HASH) += crypto.o
- 
- clean-files := capability_names.h rlim_names.h net_names.h
- 
+
 diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
 index 114fb23..ee77ec9 100644
 --- a/security/apparmor/apparmorfs.c
