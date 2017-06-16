@@ -195,15 +195,16 @@ diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
 index 8ea39aa..f628734 100644
 --- a/security/apparmor/lsm.c
 +++ b/security/apparmor/lsm.c
-@@ -33,6 +33,7 @@
- #include "include/context.h"
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+@@ -34,6 +34,7 @@
  #include "include/file.h"
  #include "include/ipc.h"
-+#include "include/net.h"
  #include "include/path.h"
++#include "include/net.h"
  #include "include/policy.h"
  #include "include/policy_ns.h"
-@@ -587,6 +588,105 @@ static int apparmor_task_setrlimit(struc
+ #include "include/procattr.h"
+@@ -587,6 +588,104 @@ static int apparmor_task_setrlimit(struc
  	return error;
  }
 
@@ -305,31 +306,29 @@ index 8ea39aa..f628734 100644
 +   return aa_revalidate_sk(OP_SOCK_SHUTDOWN, sk);
 +}
 +
-+
- static struct security_hook_list apparmor_hooks[] __lsm_ro_after_init = {
+ static struct security_hook_list apparmor_hooks[] = {
  	LSM_HOOK_INIT(ptrace_access_check, apparmor_ptrace_access_check),
  	LSM_HOOK_INIT(ptrace_traceme, apparmor_ptrace_traceme),
-@@ -616,6 +716,19 @@ static struct security_hook_list apparmo
+@@ -615,6 +714,19 @@ static struct security_hook_list apparmo
+
  	LSM_HOOK_INIT(getprocattr, apparmor_getprocattr),
  	LSM_HOOK_INIT(setprocattr, apparmor_setprocattr),
-
-+    LSM_HOOK_INIT(socket_create, apparmor_socket_create),
-+    LSM_HOOK_INIT(socket_bind, apparmor_socket_bind),
-+    LSM_HOOK_INIT(socket_connect, apparmor_socket_connect),
-+    LSM_HOOK_INIT(socket_listen, apparmor_socket_listen),
-+    LSM_HOOK_INIT(socket_accept, apparmor_socket_accept),
-+    LSM_HOOK_INIT(socket_sendmsg, apparmor_socket_sendmsg),
-+    LSM_HOOK_INIT(socket_recvmsg, apparmor_socket_recvmsg),
-+    LSM_HOOK_INIT(socket_getsockname, apparmor_socket_getsockname),
-+    LSM_HOOK_INIT(socket_getpeername, apparmor_socket_getpeername),
-+    LSM_HOOK_INIT(socket_getsockopt, apparmor_socket_getsockopt),
-+    LSM_HOOK_INIT(socket_setsockopt, apparmor_socket_setsockopt),
-+    LSM_HOOK_INIT(socket_shutdown, apparmor_socket_shutdown),
 +
++   	LSM_HOOK_INIT(socket_create, apparmor_socket_create),
++	LSM_HOOK_INIT(socket_bind, apparmor_socket_bind),
++	LSM_HOOK_INIT(socket_connect, apparmor_socket_connect),
++	LSM_HOOK_INIT(socket_listen, apparmor_socket_listen),
++	LSM_HOOK_INIT(socket_accept, apparmor_socket_accept),
++	LSM_HOOK_INIT(socket_sendmsg, apparmor_socket_sendmsg),
++	LSM_HOOK_INIT(socket_recvmsg, apparmor_socket_recvmsg),
++	LSM_HOOK_INIT(socket_getsockname, apparmor_socket_getsockname),
++	LSM_HOOK_INIT(socket_getpeername, apparmor_socket_getpeername),
++	LSM_HOOK_INIT(socket_getsockopt, apparmor_socket_getsockopt),
++	LSM_HOOK_INIT(socket_setsockopt, apparmor_socket_setsockopt),
++	LSM_HOOK_INIT(socket_shutdown, apparmor_socket_shutdown),
+
  	LSM_HOOK_INIT(cred_alloc_blank, apparmor_cred_alloc_blank),
  	LSM_HOOK_INIT(cred_free, apparmor_cred_free),
- 	LSM_HOOK_INIT(cred_prepare, apparmor_cred_prepare),
-diff --git a/security/apparmor/net.c b/security/apparmor/net.c
 new file mode 100644
 index 0000000..003dd18
 --- /dev/null
