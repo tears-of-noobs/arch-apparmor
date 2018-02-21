@@ -3,7 +3,8 @@
 # Maintainer: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-apparmor      # Build kernel with a different name
-_curkerver=`pacman -Q linux | cut -d\  -f2`
+_curkerver=4.9.82-1
+#_curkerver=`pacman -Q linux | cut -d\  -f2`
 _srcname=linux-`cut -f1 -d- <<< $_curkerver`
 pkgver=`cut -f1 -d- <<< $_curkerver`
 pkgrel=`cut -f2 -d- <<< $_curkerver`
@@ -24,16 +25,16 @@ source=("http://www.kernel.org/pub/linux/kernel/v`cut -f1 -d. <<< $_curkerver`.x
         0002-UBUNTU-SAUCE-AppArmor-basic-networking-rules.patch
         0003-apparmor-Fix-quieting-of-audit-messages-for-network-.patch
         0005-UBUNTU-SAUCE-apparmor-Add-the-ability-to-mediate-mou.patch)
-sha256sums=('294501b63701dc3a26a4566a915c6f52f25624123719371cebcbb57964821275'
-            'bfd65be726f596c0e46f472efa33c46c01be5d44ed93ef645c313a6823e6e6fb'
-            '27061aebb2e6854361925f7869bb233d44a0dde63d1564566b0cf6885081b6ff'
-            '27061aebb2e6854361925f7869bb233d44a0dde63d1564566b0cf6885081b6ff'
-            'f0d90e756f14533ee67afda280500511a62465b4f76adcc5effa95a40045179c'
-            #'faced4eb4c47c4eb1a9ee8a5bf8a7c4b49d6b4d78efbe426e410730e6267d182'
-            '4c9a0ab9e21a9129996e164ef9fef58caea0a7c3c2e46e10e74700c668f26772'
-            'ea41743891e472116ae0ce4fdd075fc8cdca563038141a6ad6cd19ef9571abd4'
-            'e202056d184c096a82f6bc33062e2a7a286d9882b62f5b9bebffbfed04b1192a'
-            '3215c7dcc9798f7f8432f940c45e396deba96af1d3908d0ea82bf7448f968abf')
+sha256sums=('SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            #'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP'
+            'SKIP')
 
 _kernelname=${pkgbase#linux}
 
@@ -109,7 +110,7 @@ prepare() {
 build() {
   cd "${srcdir}/${_srcname}"
   # build!
-  make ${MAKEFLAGS} LOCALVERSION= bzImage modules
+  make -j 4 ${MAKEFLAGS} LOCALVERSION= bzImage modules
 }
 
 _package() {

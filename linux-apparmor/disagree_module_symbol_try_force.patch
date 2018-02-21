@@ -1,14 +1,14 @@
---- kernel/module.c	2017-05-02 19:09:38.469229346 +0700
-+++ kernel/module.c	2017-05-02 19:10:53.822560838 +0700
-@@ -1308,6 +1308,7 @@
+--- a/kernel/module.c	2017-05-02 19:09:38.469229346 +0700
++++ b/kernel/module.c	2017-05-02 19:10:53.822560838 +0700
+@@ -1298,6 +1298,7 @@
  			return 1;
- 		pr_debug("Found checksum %X vs module %lX\n",
- 			 crcval, versions[i].crc);
+ 		pr_debug("Found checksum %lX vs module %lX\n",
+ 		       maybe_relocated(*crc, crc_owner), versions[i].crc);
 +
  		goto bad_version;
  	}
- 
-@@ -1318,7 +1319,9 @@
+
+@@ -1308,7 +1309,9 @@
  bad_version:
  	pr_warn("%s: disagrees about version of symbol %s\n",
  	       mod->name, symname);
@@ -17,5 +17,5 @@
 +    /* HARDCODE */
 +    return try_to_force_load(mod, symname) == 0;
  }
- 
+
  static inline int check_modstruct_version(Elf_Shdr *sechdrs,
